@@ -12,10 +12,10 @@ import ray
 from ray.tune import run_experiments
 from ray.rllib.agents.agent import get_agent_class
 
-from .tf_serving_utils import export_tf_serving, natural_keys, change_permissions_recursive
-from .configuration_list import ConfigurationList
-from .sage_cluster_communicator import SageClusterCommunicator
-from .docker_utils import get_ip_from_host
+from smrl_common.sagemaker_rl.tf_serving_utils import export_tf_serving, natural_keys, change_permissions_recursive
+from smrl_common.sagemaker_rl.configuration_list import ConfigurationList
+from smrl_common.sagemaker_rl.sage_cluster_communicator import SageClusterCommunicator
+from smrl_common.sagemaker_rl.docker_utils import get_ip_from_host
 
 TERMINATION_SIGNAL = "JOB_TERMINATED"
 INTERMEDIATE_DIR = "/opt/ml/output/intermediate"
@@ -35,7 +35,7 @@ class Cluster(Enum):
 
 class SageMakerRayLauncher(object):
     """Base class for SageMaker RL applications using Ray-RLLib.
-    Customers should sub-class this, fill in the required methods, and 
+    Customers should sub-class this, fill in the required methods, and
     call .train_main() to start a training process.
 
     Example::
@@ -48,7 +48,7 @@ class SageMakerRayLauncher(object):
         class MyLauncher(SageMakerRayLauncher):
             def register_env_creator(self):
                 register_env("RoboschoolHumanoid-v1", create_environment)
-                
+
             def get_experiment_config(self):
                 return {
                   "training": {
